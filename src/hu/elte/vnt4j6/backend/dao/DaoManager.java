@@ -1,0 +1,84 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hu.elte.vnt4j6.backend.dao;
+
+import hu.elte.vnt4j6.backend.entities.House;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author lcsoka
+ */
+public class DaoManager {
+    
+    private static final String URL = "jdbc:mysql://localhost:3306";
+    private static final String USER = "tanulo";
+    private static final String PASSWORD = "Le@nderRising1891";
+
+    private Connection con;
+    
+        /** A feladatban használt dao osztályok */
+    private HouseDao hDao;
+    private StudentDao sDao;
+    private PersonalityDao pDao;
+    private CreatureDao cDao;
+
+    public DaoManager() {
+        this.hDao = new JDBCHouseDao(con);
+    }
+    
+    public int getHouseCount() {
+        open();
+        hDao.setCon(con);
+        int count = hDao.getHouseCount();
+        close();
+        return count;
+    }
+    
+    public List<House> listHouses(){
+        
+        open();
+        hDao.setCon(con);
+        List<House> houses = hDao.findAll();
+        close();
+        
+        return houses;
+    }
+    
+    
+    /**
+     * Új connection, csatlakozás az adatbázishoz
+     */
+    private void open() {
+        try {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DaoManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * connection lezárása
+     */
+    private void close() {
+        try {
+            if ((con != null) && !con.isClosed()) {
+                con.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}

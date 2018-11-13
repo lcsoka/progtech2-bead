@@ -1,0 +1,26 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hu.elte.vnt4j6.frontend;
+
+import hu.elte.vnt4j6.backend.service.DaoService;
+import hu.elte.vnt4j6.backend.service.Service;
+import hu.elte.vnt4j6.frontend.windows.MainWindow;
+
+/**
+ *
+ * @author lcsoka
+ */
+public class GuiManager {
+    private static MainWindow screen;
+    private static final Service service = new DaoService();
+    
+    public static void start(){
+        screen = new MainWindow();
+        screen.pack();
+        screen.setVisible(true);
+    }
+    
+}
