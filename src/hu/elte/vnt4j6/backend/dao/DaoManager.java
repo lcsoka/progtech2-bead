@@ -6,6 +6,7 @@
 package hu.elte.vnt4j6.backend.dao;
 
 import hu.elte.vnt4j6.backend.entities.House;
+import hu.elte.vnt4j6.backend.entities.Personality;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -33,6 +34,7 @@ public class DaoManager {
 
     public DaoManager() {
         this.hDao = new JDBCHouseDao(con);
+        this.pDao = new JDBCPersonalityDao(con);
     }
     
     public int getHouseCount() {
@@ -51,6 +53,16 @@ public class DaoManager {
         close();
         
         return houses;
+    }
+    
+    public List<Personality> listPersonalities() {
+        open();
+        
+        pDao.setCon(con);
+        List<Personality> personalities = pDao.findAll();
+        close();
+        
+        return personalities;
     }
     
     
@@ -77,7 +89,9 @@ public class DaoManager {
             if ((con != null) && !con.isClosed()) {
                 con.close();
             }
+            System.out.println("Connection closed");
         } catch (SQLException ex) {
+            System.err.println("Error closing connection");
             Logger.getLogger(DaoManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

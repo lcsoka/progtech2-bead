@@ -5,9 +5,13 @@
  */
 package hu.elte.vnt4j6.frontend;
 
+import hu.elte.vnt4j6.backend.entities.House;
+import hu.elte.vnt4j6.backend.entities.Personality;
+import hu.elte.vnt4j6.backend.entities.Student;
 import hu.elte.vnt4j6.backend.service.DaoService;
 import hu.elte.vnt4j6.backend.service.Service;
 import hu.elte.vnt4j6.frontend.windows.MainWindow;
+import java.util.List;
 
 /**
  *
@@ -21,6 +25,18 @@ public class GuiManager {
         screen = new MainWindow();
         screen.pack();
         screen.setVisible(true);
+    }
+    
+    public static List<House> listAllHouses() {
+        return service.listHouses();
+    }
+    
+    public static List<Student> listAllStudents() {
+        return service.listStudents();
+    }
+    
+    public static List<Personality> listAllPersonalities() {
+        return service.listPersonalities();
     }
     
 }

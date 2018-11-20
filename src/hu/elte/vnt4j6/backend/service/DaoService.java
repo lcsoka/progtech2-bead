@@ -89,7 +89,7 @@ public class DaoService implements Service {
 
     @Override
     public List<Personality> listPersonalities() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dm.listPersonalities();
     }
 
     @Override

@@ -5,10 +5,10 @@
  */
 package hu.elte.vnt4j6.frontend.components;
 
-import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.frontend.GuiManager;
 import hu.elte.vnt4j6.frontend.windows.MainWindow;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,12 +20,16 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author lcsoka
  */
-public final class HousesPanel extends JPanel {
+public final class PersonalitiesPanel extends JPanel {
 
     private final MainWindow window;
     private GridBagLayout gbLayout;
@@ -38,15 +42,15 @@ public final class HousesPanel extends JPanel {
     private JLabel studentCountLbl;
     private JButton addBtn;
     private JButton editBtn;
+    private JTable resultTable;
     
-    private List<House> houses;
-
-    public HousesPanel(MainWindow frame) {
+    public PersonalitiesPanel(MainWindow frame) {
         this.window = frame;
         initHousePanels();
         initButtons();
 
-        houses = GuiManager.listAllHouses();
+        System.out.println(GuiManager.listAllHouses());
+        GuiManager.listAllPersonalities().forEach(System.out::println);
     }
 
     public void initHousePanels() {
@@ -119,6 +123,20 @@ public final class HousesPanel extends JPanel {
         gbc.weighty = 1;
         gbc.anchor = GridBagConstraints.NORTH;
         gbLayout.setConstraints(contentPanel, gbc);
+        contentPanel.setLayout(new GridLayout(1,0));
+        // Table view
+        resultTable = new JTable(5, 5);
+        
+        /**
+         * this::newSelection => method reference
+         * https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
+         *
+         * https://stackoverflow.com/questions/41069817/making-an-action-listener-for-a-jbutton-as-a-method
+         *
+         */
+        resultTable.getSelectionModel().addListSelectionListener(this::newSelection);
+        contentPanel.add(new JScrollPane(resultTable));
+        
         add(contentPanel);
 
     }
@@ -223,4 +241,22 @@ public final class HousesPanel extends JPanel {
     private void addHouse(ActionEvent e) {
         window.addHouse();
     }
+    
+    private void newSelection(ListSelectionEvent event) {
+        if (event.getValueIsAdjusting() && resultTable.getSelectedRow() > -1) {
+            // TODO:...
+        }
+    }
+    
+     public <E> void addContentToTable(List<E> content, Object[] columnNames) {
+        resultTable.removeAll();
+        DefaultTableModel dtm = new DefaultTableModel(columnNames, 0);
+        content.forEach(row -> dtm.addRow((Object[]) row));
+        resultTable.setModel(dtm);
+    }
+
+    public String getSelectedRowIndex() {
+        return (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
+    }
+
 }
