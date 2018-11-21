@@ -92,6 +92,6 @@ public class MainWindow extends JFrame {
     public void addHouse(){
         System.out.println("Opening add house window...");
     }
+  
     
-
 }

@@ -7,6 +7,7 @@ package hu.elte.vnt4j6.frontend.components;
 
 import hu.elte.vnt4j6.frontend.GuiManager;
 import hu.elte.vnt4j6.frontend.windows.MainWindow;
+import hu.elte.vnt4j6.frontend.windows.PersonalityWindow;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -43,7 +44,8 @@ public final class PersonalitiesPanel extends JPanel {
     private JButton addBtn;
     private JButton editBtn;
     private JTable resultTable;
-    
+    private boolean opened = false;
+
     public PersonalitiesPanel(MainWindow frame) {
         this.window = frame;
         initHousePanels();
@@ -61,10 +63,9 @@ public final class PersonalitiesPanel extends JPanel {
         initHeaderPanel();
         initContentPanel();
         initFooterPanel();
-        
-        
+
     }
-    
+
     private void initHeaderPanel() {
         headerPanel = new JPanel();
         GridBagLayout gbHeaderPanel = new GridBagLayout();
@@ -107,8 +108,8 @@ public final class PersonalitiesPanel extends JPanel {
         gbLayout.setConstraints(headerPanel, gbc);
         add(headerPanel);
     }
-    
-    private void initContentPanel(){
+
+    private void initContentPanel() {
         contentPanel = new JPanel();
         contentPanel.setBorder(BorderFactory.createTitledBorder(""));
         GridBagLayout gbContentPanel = new GridBagLayout();
@@ -123,10 +124,10 @@ public final class PersonalitiesPanel extends JPanel {
         gbc.weighty = 1;
         gbc.anchor = GridBagConstraints.NORTH;
         gbLayout.setConstraints(contentPanel, gbc);
-        contentPanel.setLayout(new GridLayout(1,0));
+        contentPanel.setLayout(new GridLayout(1, 0));
         // Table view
         resultTable = new JTable(5, 5);
-        
+
         /**
          * this::newSelection => method reference
          * https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
@@ -135,43 +136,18 @@ public final class PersonalitiesPanel extends JPanel {
          *
          */
         resultTable.getSelectionModel().addListSelectionListener(this::newSelection);
+        resultTable.setDefaultEditor(Object.class, null);
         contentPanel.add(new JScrollPane(resultTable));
-        
+
         add(contentPanel);
 
     }
-    
+
     private void initFooterPanel() {
         footerPanel = new JPanel();
         GridBagLayout gbFooterPanel = new GridBagLayout();
         GridBagConstraints gbcFooterPanel = new GridBagConstraints();
         footerPanel.setLayout(gbFooterPanel);
-
-        JLabel houseNameLbl = new JLabel("House name:");
-        gbcFooterPanel.gridx = 0;
-        gbcFooterPanel.gridy = 1;
-        gbcFooterPanel.gridwidth = 1;
-        gbcFooterPanel.gridheight = 1;
-        gbcFooterPanel.fill = GridBagConstraints.HORIZONTAL;
-        gbcFooterPanel.weightx = 0;
-        gbcFooterPanel.weighty = 0;
-        gbcFooterPanel.anchor = GridBagConstraints.WEST;
-        gbcFooterPanel.insets = new Insets(10, 10, 0, 10);
-        gbFooterPanel.setConstraints(houseNameLbl, gbcFooterPanel);
-        footerPanel.add(houseNameLbl);
-
-        JLabel studentCountLbl = new JLabel("Student count:");
-        gbcFooterPanel.gridx = 0;
-        gbcFooterPanel.gridy = 2;
-        gbcFooterPanel.gridwidth = 1;
-        gbcFooterPanel.gridheight = 1;
-        gbcFooterPanel.fill = GridBagConstraints.HORIZONTAL;
-        gbcFooterPanel.weightx = 0;
-        gbcFooterPanel.weighty = 0;
-        gbcFooterPanel.anchor = GridBagConstraints.WEST;
-        gbcFooterPanel.insets = new Insets(10, 10, 10, 10);
-        gbFooterPanel.setConstraints(studentCountLbl, gbcFooterPanel);
-        footerPanel.add(studentCountLbl);
 
         editBtn = new JButton("Edit");
         gbcFooterPanel.gridx = 18;
@@ -184,34 +160,9 @@ public final class PersonalitiesPanel extends JPanel {
         gbcFooterPanel.anchor = GridBagConstraints.EAST;
         gbcFooterPanel.insets = new Insets(10, 10, 10, 10);
         gbFooterPanel.setConstraints(editBtn, gbcFooterPanel);
+        editBtn.setEnabled(false);
         footerPanel.add(editBtn);
 
-        houseNameLbl = new JLabel("Test");
-        gbcFooterPanel.gridx = 1;
-        gbcFooterPanel.gridy = 1;
-        gbcFooterPanel.gridwidth = 1;
-        gbcFooterPanel.gridheight = 1;
-        gbcFooterPanel.fill = GridBagConstraints.BOTH;
-        gbcFooterPanel.weightx = 0;
-        gbcFooterPanel.weighty = 0;
-        gbcFooterPanel.anchor = GridBagConstraints.WEST;
-        gbcFooterPanel.insets = new Insets(10, 0, 0, 0);
-        gbFooterPanel.setConstraints(houseNameLbl, gbcFooterPanel);
-        footerPanel.add(houseNameLbl);
-
-        studentCountLbl = new JLabel("35");
-        gbcFooterPanel.gridx = 1;
-        gbcFooterPanel.gridy = 2;
-        gbcFooterPanel.gridwidth = 1;
-        gbcFooterPanel.gridheight = 1;
-        gbcFooterPanel.fill = GridBagConstraints.BOTH;
-        gbcFooterPanel.weightx = 0;
-        gbcFooterPanel.weighty = 0;
-        gbcFooterPanel.anchor = GridBagConstraints.WEST;
-        gbcFooterPanel.insets = new Insets(10, 0, 10, 0);
-        gbFooterPanel.setConstraints(studentCountLbl, gbcFooterPanel);
-        footerPanel.add(studentCountLbl);
-        
         gbc.gridx = 0;
         gbc.gridy = 17;
         gbc.gridwidth = 20;
@@ -235,20 +186,33 @@ public final class PersonalitiesPanel extends JPanel {
     }
 
     private void initButtons() {
-        addBtn.addActionListener(this::addHouse);
+        addBtn.addActionListener(this::addPersonality);
+        editBtn.addActionListener(this::editPersonality);
     }
-    
-    private void addHouse(ActionEvent e) {
-        window.addHouse();
+
+    private void addPersonality(ActionEvent e) {
+        PersonalityWindow personalityWindow = new PersonalityWindow();
+        personalityWindow.pack();
+        personalityWindow.setVisible(true);
     }
-    
+
+    private void editPersonality(ActionEvent e) {
+        // TODO: Validator
+        long id = Long.parseLong(resultTable.getValueAt(resultTable.getSelectedRow(), 0).toString());
+        String name = resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString();
+        
+        PersonalityWindow personalityWindow = new PersonalityWindow(id,name);
+        personalityWindow.pack();
+        personalityWindow.setVisible(true);
+    }
+
     private void newSelection(ListSelectionEvent event) {
         if (event.getValueIsAdjusting() && resultTable.getSelectedRow() > -1) {
-            // TODO:...
-        }
+            editBtn.setEnabled(true);
+        } 
     }
-    
-     public <E> void addContentToTable(List<E> content, Object[] columnNames) {
+
+    public <E> void addContentToTable(List<E> content, Object[] columnNames) {
         resultTable.removeAll();
         DefaultTableModel dtm = new DefaultTableModel(columnNames, 0);
         content.forEach(row -> dtm.addRow((Object[]) row));
@@ -257,6 +221,10 @@ public final class PersonalitiesPanel extends JPanel {
 
     public String getSelectedRowIndex() {
         return (String) resultTable.getValueAt(resultTable.getSelectedRow(), 0);
+    }
+
+    public void closePersonalityWindow() {
+        this.opened = false;
     }
 
 }

@@ -11,6 +11,7 @@ import hu.elte.vnt4j6.backend.entities.Student;
 import hu.elte.vnt4j6.backend.service.DaoService;
 import hu.elte.vnt4j6.backend.service.Service;
 import hu.elte.vnt4j6.frontend.windows.MainWindow;
+import hu.elte.vnt4j6.frontend.windows.PersonalityWindow;
 import java.util.List;
 
 /**
