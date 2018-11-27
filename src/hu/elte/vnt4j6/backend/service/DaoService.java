@@ -101,4 +101,11 @@ public class DaoService implements Service {
     public int getHouseCount() {
         return dm.getHouseCount();
     }
+
+    @Override
+    public int getStudentCount(long id) {
+        return dm.getStudentCount(id);
+    }
+    
+    
 }

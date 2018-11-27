@@ -22,7 +22,7 @@ public class DaoManager {
     
     private static final String URL = "jdbc:mysql://localhost:3306";
     private static final String USER = "tanulo";
-    private static final String PASSWORD = "Le@nderRising1891";
+    private static final String PASSWORD = "NXsn6V*o";
 
     private Connection con;
     
@@ -94,5 +94,13 @@ public class DaoManager {
             System.err.println("Error closing connection");
             Logger.getLogger(DaoManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public int getStudentCount(long id) {
+        open();
+        hDao.setCon(con);
+        int count = hDao.getStudentCount(id);
+        close();
+        return count;
     }
 }

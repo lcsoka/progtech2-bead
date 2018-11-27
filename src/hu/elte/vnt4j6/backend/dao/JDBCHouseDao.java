@@ -25,7 +25,7 @@ public class JDBCHouseDao implements HouseDao {
     public JDBCHouseDao(Connection con) {
         this.con = con;
     }
-
+    
     @Override
     public int getHouseCount() {
         String sql = "SELECT count(*) as count FROM progtech2.house";
@@ -44,6 +44,30 @@ public class JDBCHouseDao implements HouseDao {
         return 0;
     }
 
+    /**
+     *
+     * @param houseId
+     */
+    @Override
+    public int getStudentCount(long houseId) {
+        String sql = "SELECT  count(*) AS  count FROM progtech2.student where house_id = ?";
+        //try-with-resources try-catch-finally helyett lásd effective java item 9
+        try (PreparedStatement statement = con.prepareStatement(sql)) {
+            //paraméter beállítása
+            statement.setLong(1, houseId);
+            ResultSet resultSet = statement.executeQuery();
+            int count = 0;
+            while (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+            return count;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCHouseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
     @Override
     public void delete(Long key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -97,6 +121,7 @@ public class JDBCHouseDao implements HouseDao {
      */
     private House setHouse(ResultSet resultSet) throws SQLException {
         House house = new House();
+        house.setId(resultSet.getInt("id"));
         house.setHouseName(resultSet.getString("name"));
         house.setLogo(resultSet.getString("path"));
         return house;

@@ -5,6 +5,7 @@
  */
 package hu.elte.vnt4j6.frontend.windows;
 
+import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.backend.entities.Personality;
 import hu.elte.vnt4j6.frontend.GuiManager;
 import hu.elte.vnt4j6.frontend.components.HousesPanel;
@@ -72,6 +73,10 @@ public class MainWindow extends JFrame {
         this.getContentPane().setLayout(new GridLayout(1, 1));
         
         // Load Data
+        List<House> houses = GuiManager.listAllHouses();
+        housesPanel.setHouses(houses);
+        
+        
         List<Personality> personalities = GuiManager.listAllPersonalities();
         List<Object> content = new ArrayList<>();
         personalities.forEach(row -> content.add(row.toArray()));

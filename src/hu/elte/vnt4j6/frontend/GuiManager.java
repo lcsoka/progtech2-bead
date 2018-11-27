@@ -19,25 +19,29 @@ import java.util.List;
  * @author lcsoka
  */
 public class GuiManager {
+
     private static MainWindow screen;
     private static final Service service = new DaoService();
-    
-    public static void start(){
+
+    public static void start() {
         screen = new MainWindow();
         screen.pack();
         screen.setVisible(true);
     }
-    
+
     public static List<House> listAllHouses() {
         return service.listHouses();
     }
-    
+
     public static List<Student> listAllStudents() {
         return service.listStudents();
     }
-    
+
     public static List<Personality> listAllPersonalities() {
         return service.listPersonalities();
     }
-    
+
+    public static int getStudentCount(long id) {
+        return service.getStudentCount(id);
+    }
 }

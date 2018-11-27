@@ -13,4 +13,5 @@ import hu.elte.vnt4j6.backend.entities.House;
  */
 public interface HouseDao extends CRUDDao<House, Long> {
     int getHouseCount();
+    int getStudentCount(long houseId);
 }

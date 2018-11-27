@@ -50,9 +50,6 @@ public final class PersonalitiesPanel extends JPanel {
         this.window = frame;
         initHousePanels();
         initButtons();
-
-        System.out.println(GuiManager.listAllHouses());
-        GuiManager.listAllPersonalities().forEach(System.out::println);
     }
 
     public void initHousePanels() {

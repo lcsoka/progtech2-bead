@@ -10,6 +10,7 @@ package hu.elte.vnt4j6.backend.entities;
  * @author lcsoka
  */
 public class House {
+    private long id;
     private String houseName;
     private String logo;
 
@@ -27,6 +28,14 @@ public class House {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
     
 }
