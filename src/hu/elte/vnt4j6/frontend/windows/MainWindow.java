@@ -7,9 +7,11 @@ package hu.elte.vnt4j6.frontend.windows;
 
 import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.backend.entities.Personality;
+import hu.elte.vnt4j6.backend.entities.Student;
 import hu.elte.vnt4j6.frontend.GuiManager;
 import hu.elte.vnt4j6.frontend.components.HousesPanel;
 import hu.elte.vnt4j6.frontend.components.PersonalitiesPanel;
+import hu.elte.vnt4j6.frontend.components.StudentsPanel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -31,11 +33,13 @@ public class MainWindow extends JFrame {
     private static JPanel actionPanel;
     private static HousesPanel housesPanel;
     private static PersonalitiesPanel personalitiesPanel;
+    private static StudentsPanel studentsPanel;
     private static JTabbedPane tabs;
     private Dimension size = new Dimension(600, 450);
 //    private static HousesPanel contentPanel;
     
     private final static Object[] PERSONALITY_COLUMN_NAMES = new Object[]{"id", "Name"};
+    private final static Object[] STUDENTS_COLUMN_NAMES = new Object[]{"id", "Name", "House", "Personality", "Birthday"};
 
     public MainWindow() throws HeadlessException {
         initScreen();
@@ -49,11 +53,11 @@ public class MainWindow extends JFrame {
        
         housesPanel = new HousesPanel(this);
         personalitiesPanel = new PersonalitiesPanel(this);
+        studentsPanel = new StudentsPanel(this);
         
         tabs.addTab("Houses", housesPanel);
         tabs.setSelectedIndex(0);
-        JPanel jplInnerPanel2 = createInnerPanel("Tab 2 Contains Icon only");
-        tabs.addTab("Students", jplInnerPanel2);
+        tabs.addTab("Students", studentsPanel);
         JPanel jplInnerPanel3 = createInnerPanel("Tab 3 Contains Tooltip and Icon");
         tabs.addTab("Creatures", jplInnerPanel3);
         JPanel jplInnerPanel4 = createInnerPanel("Tab 4 Contains Text only");
@@ -76,6 +80,11 @@ public class MainWindow extends JFrame {
         List<House> houses = GuiManager.listAllHouses();
         housesPanel.setHouses(houses);
         
+        List<Student> students = GuiManager.listAllStudents();
+        
+        List<Object> student_content = new ArrayList<>();
+        students.forEach(row -> student_content.add(row.toArray()));
+        studentsPanel.addContentToTable(student_content, STUDENTS_COLUMN_NAMES);
         
         List<Personality> personalities = GuiManager.listAllPersonalities();
         List<Object> content = new ArrayList<>();

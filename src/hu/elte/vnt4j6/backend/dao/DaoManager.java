@@ -7,6 +7,7 @@ package hu.elte.vnt4j6.backend.dao;
 
 import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.backend.entities.Personality;
+import hu.elte.vnt4j6.backend.entities.Student;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,6 +38,7 @@ public class DaoManager {
     public DaoManager() {
         this.hDao = new JDBCHouseDao(con);
         this.pDao = new JDBCPersonalityDao(con);
+        this.sDao = new JDBCStudentDao(con);
     }
 
     public int getHouseCount() {
@@ -67,6 +69,16 @@ public class DaoManager {
         return personalities;
     }
 
+    public List<Student> listStudents() {
+         open();
+
+        sDao.setCon(con);
+        List<Student> students = sDao.findAll();
+        close();
+
+        return students;
+    }
+    
     public void addHouse(House house) {
         open();
         hDao.setCon(con);

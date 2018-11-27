@@ -58,4 +58,9 @@ public class Student {
         this.personality = personality;
     }
     
+     public Object[] toArray() {
+        String[] array = {id+"", name, house, personality, birthday+""};
+        return array;
+    }
+    
 }
