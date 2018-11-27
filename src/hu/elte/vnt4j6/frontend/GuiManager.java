@@ -44,4 +44,12 @@ public class GuiManager {
     public static int getStudentCount(long id) {
         return service.getStudentCount(id);
     }
+    
+    public static void addHouse(String name, String path) {
+        service.addHouse(name, path);
+    }
+    public static void editHouse(String name, String path, long id) {
+        service.modifyHouse(name, path, id);
+        screen.reloadHousesView();
+    }
 }

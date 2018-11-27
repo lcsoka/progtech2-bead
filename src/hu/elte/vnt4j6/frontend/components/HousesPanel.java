@@ -243,6 +243,7 @@ public final class HousesPanel extends JPanel {
 
     private void initButtons() {
         addBtn.addActionListener(this::addHouse);
+        editBtn.addActionListener(this::editHouse);
     }
 
     private void addHouse(ActionEvent e) {
@@ -252,9 +253,23 @@ public final class HousesPanel extends JPanel {
         houseWindow.setVisible(true);
 
     }
+    
+    private void editHouse(ActionEvent e) {
+//        window.addHouse();
+        HouseWindow houseWindow = new HouseWindow(currentHouse);
+        houseWindow.pack();
+        houseWindow.setVisible(true);
+
+    }
 
     public void setHouses(List<House> houses) {
         this.houses = houses;
+        this.images.forEach((item)->{
+            scrollPanel.remove(item);
+        });
+        scrollPanel.revalidate();
+        scrollPanel.repaint();
+        this.images.clear();
         if (houses.size() > 0) {
             for (House house : houses) {
                 ImageIcon icon = new ImageIcon(house.getLogo());

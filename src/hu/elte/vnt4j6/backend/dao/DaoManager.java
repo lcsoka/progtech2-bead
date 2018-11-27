@@ -19,14 +19,16 @@ import java.util.logging.Logger;
  * @author lcsoka
  */
 public class DaoManager {
-    
+
     private static final String URL = "jdbc:mysql://localhost:3306";
     private static final String USER = "tanulo";
     private static final String PASSWORD = "NXsn6V*o";
 
     private Connection con;
-    
-        /** A feladatban használt dao osztályok */
+
+    /**
+     * A feladatban használt dao osztályok
+     */
     private HouseDao hDao;
     private StudentDao sDao;
     private PersonalityDao pDao;
@@ -36,7 +38,7 @@ public class DaoManager {
         this.hDao = new JDBCHouseDao(con);
         this.pDao = new JDBCPersonalityDao(con);
     }
-    
+
     public int getHouseCount() {
         open();
         hDao.setCon(con);
@@ -44,28 +46,41 @@ public class DaoManager {
         close();
         return count;
     }
-    
-    public List<House> listHouses(){
-        
+
+    public List<House> listHouses() {
+
         open();
         hDao.setCon(con);
         List<House> houses = hDao.findAll();
         close();
-        
+
         return houses;
     }
-    
+
     public List<Personality> listPersonalities() {
         open();
-        
+
         pDao.setCon(con);
         List<Personality> personalities = pDao.findAll();
         close();
-        
+
         return personalities;
     }
+
+    public void addHouse(House house) {
+        open();
+        hDao.setCon(con);
+        hDao.save(house);
+        close();
+    }
     
-    
+    public void modifyHouse(House house){
+        open();
+        hDao.setCon(con);
+        hDao.update(house);
+        close();
+    }
+
     /**
      * Új connection, csatlakozás az adatbázishoz
      */

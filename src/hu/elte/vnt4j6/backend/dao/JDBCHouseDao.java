@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,12 +21,13 @@ import java.util.logging.Logger;
  * @author lcsoka
  */
 public class JDBCHouseDao implements HouseDao {
+
     private Connection con;
 
     public JDBCHouseDao(Connection con) {
         this.con = con;
     }
-    
+
     @Override
     public int getHouseCount() {
         String sql = "SELECT count(*) as count FROM progtech2.house";
@@ -61,13 +63,13 @@ public class JDBCHouseDao implements HouseDao {
                 count = resultSet.getInt("count");
             }
             return count;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(JDBCHouseDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
     }
-    
+
     @Override
     public void delete(Long key) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -75,7 +77,7 @@ public class JDBCHouseDao implements HouseDao {
 
     @Override
     public List<House> findAll() {
-        
+
         String sql = "SELECT * FROM progtech2.house";
 
         try (PreparedStatement statement = con.prepareStatement(sql);
@@ -99,17 +101,58 @@ public class JDBCHouseDao implements HouseDao {
 
     @Override
     public House save(House entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "INSERT INTO progtech2.house (name, path) VALUES (?, ?)";
+
+        try (PreparedStatement statement = createPreparedStatementForSave(con, sql, entity);
+                ResultSet generatedKeys = statement.getGeneratedKeys();) {
+
+            if (generatedKeys.next()) {
+                entity.setId(generatedKeys.getLong(1));
+                return entity;
+            } else {
+                throw new SQLException("failed order creation");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCHouseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
     public void update(House entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String sql = "UPDATE progtech2.house SET name=?, path=? WHERE id=?";
+        try (PreparedStatement statement = createPreparedStatementForUpdate(con, sql, entity);) {
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCHouseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void setCon(Connection con) {
         this.con = con;
+    }
+
+    private PreparedStatement createPreparedStatementForSave(Connection con, String sql, House entity) throws SQLException {
+        //Statement.RETURN_GENERATED_KEYS => beállítjuk, hogy a generált kulcs visszakérhető legyen
+        PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+        statement.setString(1, entity.getHouseName());
+        statement.setString(2, entity.getLogo());
+
+        statement.executeUpdate();
+
+        return statement;
+    }
+
+    private PreparedStatement createPreparedStatementForUpdate(Connection con, String sql, House entity) throws SQLException {
+        PreparedStatement statement = con.prepareStatement(sql);
+
+        statement.setString(1, entity.getHouseName());
+        statement.setString(2, entity.getLogo());
+        statement.setLong(3, entity.getId());
+
+        return statement;
     }
     
     /**
@@ -126,5 +169,5 @@ public class JDBCHouseDao implements HouseDao {
         house.setLogo(resultSet.getString("path"));
         return house;
     }
-    
+
 }

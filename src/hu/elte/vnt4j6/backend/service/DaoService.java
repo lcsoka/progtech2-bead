@@ -29,7 +29,10 @@ public class DaoService implements Service {
 
     @Override
     public void addHouse(String name, String path) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        House house = new House();
+        house.setHouseName(name);
+        house.setLogo(path);
+        dm.addHouse(house);
     }
 
     @Override
@@ -106,6 +109,17 @@ public class DaoService implements Service {
     public int getStudentCount(long id) {
         return dm.getStudentCount(id);
     }
+
+    @Override
+    public void modifyHouse(String name, String path, long id) {
+        House house = new House();
+        house.setHouseName(name);
+        house.setLogo(path);
+        house.setId(id);
+        dm.modifyHouse(house);
+    }
+    
+    
     
     
 }

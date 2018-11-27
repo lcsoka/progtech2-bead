@@ -33,6 +33,7 @@ public interface Service {
     List<House> listHouses();
     List<Personality> listPersonalities();
     void modifyCreature(Date firstMet);
+    void modifyHouse(String name, String path, long id);
     int getHouseCount();
     int getStudentCount(long id);
 }

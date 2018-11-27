@@ -97,6 +97,11 @@ public class MainWindow extends JFrame {
     public void addHouse(){
         System.out.println("Opening add house window...");
     }
+    
+    public void reloadHousesView(){
+        List<House> houses = GuiManager.listAllHouses();
+        housesPanel.setHouses(houses);
+    }
   
     
 }
