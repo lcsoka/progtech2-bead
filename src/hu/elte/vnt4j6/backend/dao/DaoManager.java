@@ -70,7 +70,7 @@ public class DaoManager {
     }
 
     public List<Student> listStudents() {
-         open();
+        open();
 
         sDao.setCon(con);
         List<Student> students = sDao.findAll();
@@ -78,18 +78,32 @@ public class DaoManager {
 
         return students;
     }
-    
+
     public void addHouse(House house) {
         open();
         hDao.setCon(con);
         hDao.save(house);
         close();
     }
-    
-    public void modifyHouse(House house){
+
+    public void modifyHouse(House house) {
         open();
         hDao.setCon(con);
         hDao.update(house);
+        close();
+    }
+
+    public void addPersonality(Personality personality) {
+        open();
+        pDao.setCon(con);
+        pDao.save(personality);
+        close();
+    }
+
+    public void modifyPersonality(Personality personality) {
+        open();
+        pDao.setCon(con);
+        pDao.update(personality);
         close();
     }
 

@@ -34,6 +34,7 @@ public interface Service {
     List<Personality> listPersonalities();
     void modifyCreature(Date firstMet);
     void modifyHouse(String name, String path, long id);
+    void modifyPersonality(String name, long id);
     int getHouseCount();
     int getStudentCount(long id);
 }

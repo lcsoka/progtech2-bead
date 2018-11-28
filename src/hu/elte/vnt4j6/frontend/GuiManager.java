@@ -52,4 +52,12 @@ public class GuiManager {
         service.modifyHouse(name, path, id);
         screen.reloadHousesView();
     }
+    
+     public static void addPersonality(String name) {
+        service.addPersonality(name);
+    }
+    public static void editPersonality(String name, long id) {
+        service.modifyPersonality(name, id);
+        screen.reloadPersonalitiesView();
+    }
 }

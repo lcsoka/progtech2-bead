@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class DaoService implements Service {
 
- 
     private DaoManager dm = new DaoManager();
 
     @Override
@@ -37,7 +36,9 @@ public class DaoService implements Service {
 
     @Override
     public void addPersonality(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Personality personality = new Personality();
+        personality.setPersonalityName(name);
+        dm.addPersonality(personality);
     }
 
     @Override
@@ -99,7 +100,7 @@ public class DaoService implements Service {
     public void modifyCreature(Date firstMet) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public int getHouseCount() {
         return dm.getHouseCount();
@@ -118,8 +119,13 @@ public class DaoService implements Service {
         house.setId(id);
         dm.modifyHouse(house);
     }
-    
-    
-    
-    
+
+    @Override
+    public void modifyPersonality(String name, long id) {
+        Personality personality = new Personality();
+        personality.setPersonalityId(id);
+        personality.setPersonalityName(name);
+        dm.modifyPersonality(personality);
+    }
+
 }

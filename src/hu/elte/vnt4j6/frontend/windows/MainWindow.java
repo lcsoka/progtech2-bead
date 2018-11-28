@@ -81,15 +81,11 @@ public class MainWindow extends JFrame {
         housesPanel.setHouses(houses);
         
         List<Student> students = GuiManager.listAllStudents();
-        
         List<Object> student_content = new ArrayList<>();
         students.forEach(row -> student_content.add(row.toArray()));
         studentsPanel.addContentToTable(student_content, STUDENTS_COLUMN_NAMES);
         
-        List<Personality> personalities = GuiManager.listAllPersonalities();
-        List<Object> content = new ArrayList<>();
-        personalities.forEach(row -> content.add(row.toArray()));
-        personalitiesPanel.addContentToTable(content, PERSONALITY_COLUMN_NAMES);
+        reloadPersonalitiesView();
         
         
     }
@@ -112,5 +108,11 @@ public class MainWindow extends JFrame {
         housesPanel.setHouses(houses);
     }
   
+    public void reloadPersonalitiesView(){
+        List<Personality> personalities = GuiManager.listAllPersonalities();
+        List<Object> content = new ArrayList<>();
+        personalities.forEach(row -> content.add(row.toArray()));
+        personalitiesPanel.addContentToTable(content, PERSONALITY_COLUMN_NAMES);
+    }
     
 }
