@@ -42,8 +42,24 @@ public class DaoService implements Service {
     }
 
     @Override
-    public void addStudent(String name, Date birtday, String house, String personality) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addStudent(String name, long houseId, long personalityId, Date birthday) {
+        Student student = new Student();
+        student.setName(name);
+        student.setHouseId(houseId);
+        student.setPersonalityId(personalityId);
+        student.setBirthday(birthday);
+        dm.addStudent(student);
+    }
+
+    @Override
+    public void modifyStudent(String name, long houseId, long personalityId, Date birthday, long studentId) {
+        Student student = new Student();
+        student.setName(name);
+        student.setHouseId(houseId);
+        student.setPersonalityId(personalityId);
+        student.setBirthday(birthday);
+        student.setId(studentId);
+        dm.modifyStudent(student);
     }
 
     @Override

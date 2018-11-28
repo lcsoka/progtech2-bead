@@ -12,11 +12,14 @@ import java.util.Date;
  * @author lcsoka
  */
 public class Student {
+
     private Date birthday;
     private String house;
+    private long houseId;
     private long id;
     private String name;
     private String personality;
+    private long personalityId;
 
     public Date getBirthday() {
         return birthday;
@@ -57,10 +60,26 @@ public class Student {
     public void setPersonality(String personality) {
         this.personality = personality;
     }
-    
-     public Object[] toArray() {
-        String[] array = {id+"", name, house, personality, birthday+""};
+
+    public long getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(long houseId) {
+        this.houseId = houseId;
+    }
+
+    public long getPersonalityId() {
+        return personalityId;
+    }
+
+    public void setPersonalityId(long personalityIdl) {
+        this.personalityId = personalityIdl;
+    }
+
+    public Object[] toArray() {
+        String[] array = {id + "", name, house, personality, birthday + ""};
         return array;
     }
-    
+
 }

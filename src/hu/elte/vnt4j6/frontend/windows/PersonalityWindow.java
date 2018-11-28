@@ -90,7 +90,7 @@ public class PersonalityWindow extends JFrame {
 
     public void initButtons() {
         cancelBtn.addActionListener(this::closeWindow);
-        saveBtn.addActionListener(this::saveHouse);
+        saveBtn.addActionListener(this::savePersonality);
     }
 
     public void closeWindow(ActionEvent e) {
@@ -98,7 +98,7 @@ public class PersonalityWindow extends JFrame {
         dispose();
     }
 
-    public void saveHouse(ActionEvent e) {
+    public void savePersonality(ActionEvent e) {
 
         // TODO: Validation here...
         if (editing) {

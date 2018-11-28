@@ -47,7 +47,7 @@ public class JDBCPersonalityDao implements PersonalityDao {
             }
             return result;
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCHouseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCPersonalityDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -71,7 +71,7 @@ public class JDBCPersonalityDao implements PersonalityDao {
                 throw new SQLException("failed order creation");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCHouseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCPersonalityDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -82,7 +82,7 @@ public class JDBCPersonalityDao implements PersonalityDao {
         try (PreparedStatement statement = createPreparedStatementForUpdate(con, sql, entity);) {
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCHouseDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCPersonalityDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -80,11 +80,7 @@ public class MainWindow extends JFrame {
         List<House> houses = GuiManager.listAllHouses();
         housesPanel.setHouses(houses);
         
-        List<Student> students = GuiManager.listAllStudents();
-        List<Object> student_content = new ArrayList<>();
-        students.forEach(row -> student_content.add(row.toArray()));
-        studentsPanel.addContentToTable(student_content, STUDENTS_COLUMN_NAMES);
-        
+        reloadStudentsView();
         reloadPersonalitiesView();
         
         
@@ -106,6 +102,13 @@ public class MainWindow extends JFrame {
     public void reloadHousesView(){
         List<House> houses = GuiManager.listAllHouses();
         housesPanel.setHouses(houses);
+    }
+    
+    public void reloadStudentsView() {
+        List<Student> students = GuiManager.listAllStudents();
+        List<Object> student_content = new ArrayList<>();
+        students.forEach(row -> student_content.add(row.toArray()));
+        studentsPanel.addContentToTable(student_content, STUDENTS_COLUMN_NAMES);
     }
   
     public void reloadPersonalitiesView(){

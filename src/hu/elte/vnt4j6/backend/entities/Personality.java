@@ -33,4 +33,11 @@ public class Personality {
         String[] array = {personalityId+"", personalityName};
         return array;
     }
+
+    @Override
+    public String toString() {
+        return personalityName;
+    }
+    
+    
 }

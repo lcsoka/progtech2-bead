@@ -21,7 +21,7 @@ public interface Service {
     void addCreature(String name, Date firstMet, String personality);
     void addHouse(String name, String path);
     void addPersonality(String name);
-    void addStudent(String name, Date birtday, String house, String personality);
+    void addStudent(String name, long houseId, long personalityId, Date birthday);
     void deleteCreature(long id);
     void deleteHouse(String name);
     void deletePersonality(String name);
@@ -35,6 +35,7 @@ public interface Service {
     void modifyCreature(Date firstMet);
     void modifyHouse(String name, String path, long id);
     void modifyPersonality(String name, long id);
+    void modifyStudent(String name, long houseId, long personalityId, Date birthday, long studentId);
     int getHouseCount();
     int getStudentCount(long id);
 }

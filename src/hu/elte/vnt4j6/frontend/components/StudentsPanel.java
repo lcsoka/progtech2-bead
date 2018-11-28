@@ -8,14 +8,20 @@ package hu.elte.vnt4j6.frontend.components;
 import hu.elte.vnt4j6.frontend.GuiManager;
 import hu.elte.vnt4j6.frontend.windows.MainWindow;
 import hu.elte.vnt4j6.frontend.windows.PersonalityWindow;
+import hu.elte.vnt4j6.frontend.windows.StudentWindow;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -183,30 +189,39 @@ public final class StudentsPanel extends JPanel {
     }
 
     private void initButtons() {
-        addBtn.addActionListener(this::addPersonality);
-        editBtn.addActionListener(this::editPersonality);
+        addBtn.addActionListener(this::addStudent);
+        editBtn.addActionListener(this::editStudent);
     }
 
-    private void addPersonality(ActionEvent e) {
-        PersonalityWindow personalityWindow = new PersonalityWindow();
-        personalityWindow.pack();
-        personalityWindow.setVisible(true);
+    private void addStudent(ActionEvent e) {
+        StudentWindow studentWindow = new StudentWindow();
+        studentWindow.pack();
+        studentWindow.setVisible(true);
     }
 
-    private void editPersonality(ActionEvent e) {
+    private void editStudent(ActionEvent e) {
         // TODO: Validator
         long id = Long.parseLong(resultTable.getValueAt(resultTable.getSelectedRow(), 0).toString());
         String name = resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString();
-        
-        PersonalityWindow personalityWindow = new PersonalityWindow(id,name);
-        personalityWindow.pack();
-        personalityWindow.setVisible(true);
+        String house = resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString();
+        String personality = resultTable.getValueAt(resultTable.getSelectedRow(), 3).toString();
+        String birthdayStr = resultTable.getValueAt(resultTable.getSelectedRow(), 4).toString();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = format.parse(birthdayStr);
+
+            StudentWindow studentWindow = new StudentWindow(id, name, house, personality, date);
+            studentWindow.pack();
+            studentWindow.setVisible(true);
+        } catch (HeadlessException | ParseException err) {
+            System.out.println("Couldn parse date");
+        }
     }
 
     private void newSelection(ListSelectionEvent event) {
         if (event.getValueIsAdjusting() && resultTable.getSelectedRow() > -1) {
             editBtn.setEnabled(true);
-        } 
+        }
     }
 
     public <E> void addContentToTable(List<E> content, Object[] columnNames) {

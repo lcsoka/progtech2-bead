@@ -107,6 +107,20 @@ public class DaoManager {
         close();
     }
 
+    public void addStudent(Student student) {
+        open();
+        sDao.setCon(con);
+        sDao.save(student);
+        close();
+    }
+
+    public void modifyStudent(Student student) {
+        open();
+        sDao.setCon(con);
+        sDao.update(student);
+        close();
+    }
+
     /**
      * Új connection, csatlakozás az adatbázishoz
      */
