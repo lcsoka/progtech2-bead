@@ -79,9 +79,12 @@ public class StudentWindow extends JFrame {
         
         System.out.println(birthday);
         
-        this.birthdayPicker.getModel().setYear(birthday.getYear());
-        this.birthdayPicker.getModel().setMonth(birthday.getMonth());
-        this.birthdayPicker.getModel().setDay(birthday.getDay());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(birthday);
+        
+        this.birthdayPicker.getModel().setYear(calendar.get(Calendar.YEAR));
+        this.birthdayPicker.getModel().setMonth(calendar.get(Calendar.MONTH));
+        this.birthdayPicker.getModel().setDay(calendar.get(Calendar.DAY_OF_MONTH));
         this.birthdayPicker.getModel().setSelected(true);
         
         

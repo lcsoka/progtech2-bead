@@ -85,7 +85,12 @@ public class JDBCStudentDao implements StudentDao {
 
     @Override
     public void update(Student entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String sql = "UPDATE progtech2.student SET name=?, house_id=?, personality_id=?, birthday=? WHERE id=?";
+        try (PreparedStatement statement = createPreparedStatementForUpdate(con, sql, entity);) {
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCStudentDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -113,7 +118,7 @@ public class JDBCStudentDao implements StudentDao {
         statement.setString(1, entity.getName());
         statement.setLong(2, entity.getHouseId());
         statement.setLong(3, entity.getPersonalityId());
-        statement.setDate(4, (Date) entity.getBirthday());
+        statement.setDate(4, new java.sql.Date(entity.getBirthday().getTime()));
         statement.setLong(5, entity.getId());
 
         return statement;
