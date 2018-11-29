@@ -111,6 +111,13 @@ public class MainWindow extends JFrame {
         studentsPanel.addContentToTable(student_content, STUDENTS_COLUMN_NAMES);
     }
   
+    public void reloadStudentsView(List<Student> students) {
+        List<Object> student_content = new ArrayList<>();
+        students.forEach(row -> student_content.add(row.toArray()));
+        studentsPanel.addContentToTable(student_content, STUDENTS_COLUMN_NAMES);
+    }
+  
+    
     public void reloadPersonalitiesView(){
         List<Personality> personalities = GuiManager.listAllPersonalities();
         List<Object> content = new ArrayList<>();

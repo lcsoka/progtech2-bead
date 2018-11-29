@@ -78,6 +78,17 @@ public class DaoManager {
 
         return students;
     }
+    
+    
+    public List<Student> findStudentByName(String name) {
+        open();
+
+        sDao.setCon(con);
+        List<Student> students = sDao.findByName(name);
+        close();
+
+        return students;
+    }
 
     public void addHouse(House house) {
         open();
@@ -120,6 +131,8 @@ public class DaoManager {
         sDao.update(student);
         close();
     }
+    
+    
 
     /**
      * Új connection, csatlakozás az adatbázishoz

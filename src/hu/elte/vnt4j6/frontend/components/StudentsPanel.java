@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,7 +45,9 @@ public final class StudentsPanel extends JPanel {
     private JPanel headerPanel;
     private JPanel contentPanel;
     private JPanel footerPanel;
-    private JLabel titleLbl;
+//    private JLabel titleLbl;
+    private JTextField searchField;
+    private JButton searchBtn;
     private JLabel houseNameLbl;
     private JLabel studentCountLbl;
     private JButton addBtn;
@@ -88,7 +91,16 @@ public final class StudentsPanel extends JPanel {
         gbHeaderPanel.setConstraints(addBtn, gbcHeaderPanel);
         headerPanel.add(addBtn);
 
-        titleLbl = new JLabel("Students");
+//        titleLbl = new JLabel("Students");
+        JPanel searchPanel = new JPanel(new FlowLayout());
+        
+        searchField = new JTextField();
+        searchField.setPreferredSize(new Dimension(150,30));
+        searchBtn = new JButton("Search");
+        searchBtn.setPreferredSize(new Dimension(90,30));
+        searchPanel.add(searchField);
+        searchPanel.add(searchBtn);
+        
         gbcHeaderPanel.gridx = 1;
         gbcHeaderPanel.gridy = 1;
         gbcHeaderPanel.gridwidth = 8;
@@ -98,8 +110,8 @@ public final class StudentsPanel extends JPanel {
         gbcHeaderPanel.weighty = 1;
         gbcHeaderPanel.anchor = GridBagConstraints.WEST;
         gbcHeaderPanel.insets = new Insets(10, 10, 10, 10);
-        gbHeaderPanel.setConstraints(titleLbl, gbcHeaderPanel);
-        headerPanel.add(titleLbl);
+        gbHeaderPanel.setConstraints(searchPanel, gbcHeaderPanel);
+        headerPanel.add(searchPanel);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 20;
@@ -191,6 +203,7 @@ public final class StudentsPanel extends JPanel {
     private void initButtons() {
         addBtn.addActionListener(this::addStudent);
         editBtn.addActionListener(this::editStudent);
+        searchBtn.addActionListener(this::searchStudent);
     }
 
     private void addStudent(ActionEvent e) {
@@ -215,6 +228,17 @@ public final class StudentsPanel extends JPanel {
             studentWindow.setVisible(true);
         } catch (HeadlessException | ParseException err) {
             System.out.println("Couldn parse date");
+        }
+    }
+    
+    private void searchStudent(ActionEvent e) {
+        
+        String searchText = this.searchField.getText();
+        
+        if (searchText.isEmpty() || searchText.length() == 0) {
+            GuiManager.refreshStuedntList();
+        } else {
+            GuiManager.findStudentByName(this.searchField.getText());
         }
     }
 

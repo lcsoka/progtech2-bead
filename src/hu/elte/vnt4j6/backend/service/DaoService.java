@@ -144,4 +144,9 @@ public class DaoService implements Service {
         dm.modifyPersonality(personality);
     }
 
+    @Override
+    public List<Student> findStudentByName(String name) {
+        return dm.findStudentByName(name);
+    }
+
 }

@@ -30,6 +30,7 @@ public interface Service {
     Student findStudent(String name);
     List<Creature> listCreatures();
     List<Student> listStudents();
+    List<Student> findStudentByName(String name);
     List<House> listHouses();
     List<Personality> listPersonalities();
     void modifyCreature(Date firstMet);

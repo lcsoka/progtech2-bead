@@ -69,11 +69,20 @@ public class GuiManager {
         service.addStudent(name, house.getId(), personality.getPersonalityId(), birthday);
         screen.reloadStudentsView();
     }
-    
-    
+
     public static void editStudent(String name, House house, Personality personality, Date birthday, long id) {
         service.modifyStudent(name, house.getId(), personality.getPersonalityId(), birthday, id);
         screen.reloadStudentsView();
+    }
+    
+    public static void refreshStuedntList() {
+        screen.reloadStudentsView();
+    }
+    
+    public static List<Student> findStudentByName(String name) {
+        List<Student> students = service.findStudentByName(name);
+        screen.reloadStudentsView(students);
+        return students;
     }
 
 }

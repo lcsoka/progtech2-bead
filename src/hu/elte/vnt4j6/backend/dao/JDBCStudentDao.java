@@ -140,4 +140,32 @@ public class JDBCStudentDao implements StudentDao {
         student.setBirthday(resultSet.getDate("birthday"));
         return student;
     }
+
+    @Override
+    public List<Student> findByName(String name) {
+        
+//        SELECT * FROM progtech2.student where name LIKE '%Te%';
+        
+        String sql = "SELECT  student.id, student.name, house.name as house,"
+                + "personality.name as personality, student.birthday FROM "
+                + "progtech2.student  join progtech2.house, progtech2.personality \n"
+                + "where progtech2.student.house_id = progtech2.house.id \n"
+                + "and progtech2.student.personality_id = progtech2.personality.id "
+                + "and progtech2.student.name like ?";
+
+        try (PreparedStatement statement = con.prepareStatement(sql)){
+                statement.setString(1, "%"+name+"%");
+                ResultSet resultSet = statement.executeQuery();
+            //resultSet feldolgozása
+            List<Student> result = new LinkedList<>();
+            while (resultSet.next()) {
+                result.add(setStudent(resultSet));
+            }
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCStudentDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
 }
