@@ -5,10 +5,12 @@
  */
 package hu.elte.vnt4j6.frontend.windows;
 
+import hu.elte.vnt4j6.backend.entities.Creature;
 import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.backend.entities.Personality;
 import hu.elte.vnt4j6.backend.entities.Student;
 import hu.elte.vnt4j6.frontend.GuiManager;
+import hu.elte.vnt4j6.frontend.components.CreaturesPanel;
 import hu.elte.vnt4j6.frontend.components.HousesPanel;
 import hu.elte.vnt4j6.frontend.components.PersonalitiesPanel;
 import hu.elte.vnt4j6.frontend.components.StudentsPanel;
@@ -34,12 +36,14 @@ public class MainWindow extends JFrame {
     private static HousesPanel housesPanel;
     private static PersonalitiesPanel personalitiesPanel;
     private static StudentsPanel studentsPanel;
+    private static CreaturesPanel creaturesPanel;
     private static JTabbedPane tabs;
     private Dimension size = new Dimension(600, 450);
 //    private static HousesPanel contentPanel;
     
     private final static Object[] PERSONALITY_COLUMN_NAMES = new Object[]{"id", "Name"};
     private final static Object[] STUDENTS_COLUMN_NAMES = new Object[]{"id", "Name", "House", "Personality", "Birthday"};
+    private final static Object[] CREATURES_COLUMN_NAMES = new Object[]{"id", "Name", "First Met", "Personality"};
 
     public MainWindow() throws HeadlessException {
         initScreen();
@@ -54,13 +58,12 @@ public class MainWindow extends JFrame {
         housesPanel = new HousesPanel(this);
         personalitiesPanel = new PersonalitiesPanel(this);
         studentsPanel = new StudentsPanel(this);
+        creaturesPanel = new CreaturesPanel(this);
         
         tabs.addTab("Houses", housesPanel);
         tabs.setSelectedIndex(0);
         tabs.addTab("Students", studentsPanel);
-        JPanel jplInnerPanel3 = createInnerPanel("Tab 3 Contains Tooltip and Icon");
-        tabs.addTab("Creatures", jplInnerPanel3);
-        JPanel jplInnerPanel4 = createInnerPanel("Tab 4 Contains Text only");
+        tabs.addTab("Creatures", creaturesPanel);
         tabs.addTab("Personalities", personalitiesPanel);
         // Add the tabbed pane to this panel.
         actionPanel.setLayout(new GridLayout(1, 1));
@@ -82,6 +85,7 @@ public class MainWindow extends JFrame {
         
         reloadStudentsView();
         reloadPersonalitiesView();
+        reloadCreaturesPanel();
         
         
     }
@@ -117,6 +121,14 @@ public class MainWindow extends JFrame {
         studentsPanel.addContentToTable(student_content, STUDENTS_COLUMN_NAMES);
     }
   
+        
+    public void reloadCreaturesPanel(){
+        List<Creature> creatures = GuiManager.listAllCreatures();
+        List<Object> content = new ArrayList<>();
+        creatures.forEach(row -> content.add(row.toArray()));
+        creaturesPanel.addContentToTable(content, CREATURES_COLUMN_NAMES);
+    }
+    
     
     public void reloadPersonalitiesView(){
         List<Personality> personalities = GuiManager.listAllPersonalities();

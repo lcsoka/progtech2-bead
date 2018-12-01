@@ -5,14 +5,21 @@
         <group>
             <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/windows/PersonalityWindow.java</file>
             <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/GuiManager.java</file>
-            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/windows/TestWindow.java</file>
             <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/components/HousesPanel.java</file>
             <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/dao/HouseDao.java</file>
             <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/entities/House.java</file>
             <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/components/ImageView.java</file>
-            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/dao/JDBCHouseDao.java</file>
-            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/components/PersonalitiesPanel.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/service/Service.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/dao/JDBCCreatureDao.java</file>
             <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/windows/MainWindow.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/components/StudentsPanel.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/windows/TestWindow.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/service/DaoService.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/entities/Creature.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/dao/DaoManager.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/frontend/components/PersonalitiesPanel.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/dao/StudentDao.java</file>
+            <file>file:/Users/lcsoka/Developer/java/Progtech/2/Beadando/src/hu/elte/vnt4j6/backend/dao/JDBCStudentDao.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,6 +5,7 @@
  */
 package hu.elte.vnt4j6.backend.dao;
 
+import hu.elte.vnt4j6.backend.entities.Creature;
 import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.backend.entities.Personality;
 import hu.elte.vnt4j6.backend.entities.Student;
@@ -23,7 +24,7 @@ public class DaoManager {
 
     private static final String URL = "jdbc:mysql://localhost:3306";
     private static final String USER = "tanulo";
-    private static final String PASSWORD = "NXsn6V*o";
+        private static final String PASSWORD = "NXsn6V*o";
 
     private Connection con;
 
@@ -39,6 +40,7 @@ public class DaoManager {
         this.hDao = new JDBCHouseDao(con);
         this.pDao = new JDBCPersonalityDao(con);
         this.sDao = new JDBCStudentDao(con);
+        this.cDao = new JDBCCreatureDao(con);
     }
 
     public int getHouseCount() {
@@ -132,7 +134,13 @@ public class DaoManager {
         close();
     }
     
-    
+    public List<Creature> listCreatures() {
+        open();
+        cDao.setCon(con);
+        List<Creature> creatures = cDao.findAll();
+        close();
+        return creatures;
+    }
 
     /**
      * Új connection, csatlakozás az adatbázishoz

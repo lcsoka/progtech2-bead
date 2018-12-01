@@ -5,6 +5,7 @@
  */
 package hu.elte.vnt4j6.frontend;
 
+import hu.elte.vnt4j6.backend.entities.Creature;
 import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.backend.entities.Personality;
 import hu.elte.vnt4j6.backend.entities.Student;
@@ -40,6 +41,10 @@ public class GuiManager {
 
     public static List<Personality> listAllPersonalities() {
         return service.listPersonalities();
+    }
+    
+    public static List<Creature> listAllCreatures() {
+        return service.listCreatures();
     }
 
     public static int getStudentCount(long id) {
