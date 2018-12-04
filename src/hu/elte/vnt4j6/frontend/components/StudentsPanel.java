@@ -227,7 +227,7 @@ public final class StudentsPanel extends JPanel {
             studentWindow.pack();
             studentWindow.setVisible(true);
         } catch (HeadlessException | ParseException err) {
-            System.out.println("Couldn parse date");
+            System.out.println("Couldn't parse date");
         }
     }
     
@@ -236,7 +236,7 @@ public final class StudentsPanel extends JPanel {
         String searchText = this.searchField.getText();
         
         if (searchText.isEmpty() || searchText.length() == 0) {
-            GuiManager.refreshStuedntList();
+            GuiManager.refreshStudentList();
         } else {
             GuiManager.findStudentByName(this.searchField.getText());
         }

@@ -6,16 +6,23 @@
 package hu.elte.vnt4j6.frontend.components;
 
 import hu.elte.vnt4j6.frontend.GuiManager;
+import hu.elte.vnt4j6.frontend.windows.CreatureWindow;
 import hu.elte.vnt4j6.frontend.windows.MainWindow;
 import hu.elte.vnt4j6.frontend.windows.PersonalityWindow;
+import hu.elte.vnt4j6.frontend.windows.StudentWindow;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -69,18 +76,18 @@ public final class CreaturesPanel extends JPanel {
         GridBagConstraints gbcHeaderPanel = new GridBagConstraints();
         headerPanel.setLayout(gbHeaderPanel);
 
-//        addBtn = new JButton("Add");
-//        gbcHeaderPanel.gridx = 18;
-//        gbcHeaderPanel.gridy = 1;
-//        gbcHeaderPanel.gridwidth = 1;
-//        gbcHeaderPanel.gridheight = 1;
-//        gbcHeaderPanel.fill = GridBagConstraints.HORIZONTAL;
-//        gbcHeaderPanel.weightx = 1;
-//        gbcHeaderPanel.weighty = 0;
-//        gbcHeaderPanel.anchor = GridBagConstraints.EAST;
-//        gbcHeaderPanel.insets = new Insets(10, 10, 10, 10);
-//        gbHeaderPanel.setConstraints(addBtn, gbcHeaderPanel);
-//        headerPanel.add(addBtn);
+        addBtn = new JButton("Add");
+        gbcHeaderPanel.gridx = 18;
+        gbcHeaderPanel.gridy = 1;
+        gbcHeaderPanel.gridwidth = 1;
+        gbcHeaderPanel.gridheight = 1;
+        gbcHeaderPanel.fill = GridBagConstraints.HORIZONTAL;
+        gbcHeaderPanel.weightx = 1;
+        gbcHeaderPanel.weighty = 0;
+        gbcHeaderPanel.anchor = GridBagConstraints.EAST;
+        gbcHeaderPanel.insets = new Insets(10, 10, 10, 10);
+        gbHeaderPanel.setConstraints(addBtn, gbcHeaderPanel);
+        headerPanel.add(addBtn);
 
         titleLbl = new JLabel("Creatures");
         gbcHeaderPanel.gridx = 1;
@@ -146,19 +153,19 @@ public final class CreaturesPanel extends JPanel {
         GridBagConstraints gbcFooterPanel = new GridBagConstraints();
         footerPanel.setLayout(gbFooterPanel);
 
-//        editBtn = new JButton("Edit");
-//        gbcFooterPanel.gridx = 18;
-//        gbcFooterPanel.gridy = 2;
-//        gbcFooterPanel.gridwidth = 1;
-//        gbcFooterPanel.gridheight = 1;
-//        gbcFooterPanel.fill = GridBagConstraints.HORIZONTAL;
-//        gbcFooterPanel.weightx = 1;
-//        gbcFooterPanel.weighty = 0;
-//        gbcFooterPanel.anchor = GridBagConstraints.EAST;
-//        gbcFooterPanel.insets = new Insets(10, 10, 10, 10);
-//        gbFooterPanel.setConstraints(editBtn, gbcFooterPanel);
-//        editBtn.setEnabled(false);
-//        footerPanel.add(editBtn);
+        editBtn = new JButton("Edit");
+        gbcFooterPanel.gridx = 18;
+        gbcFooterPanel.gridy = 2;
+        gbcFooterPanel.gridwidth = 1;
+        gbcFooterPanel.gridheight = 1;
+        gbcFooterPanel.fill = GridBagConstraints.HORIZONTAL;
+        gbcFooterPanel.weightx = 1;
+        gbcFooterPanel.weighty = 0;
+        gbcFooterPanel.anchor = GridBagConstraints.EAST;
+        gbcFooterPanel.insets = new Insets(10, 10, 10, 10);
+        gbFooterPanel.setConstraints(editBtn, gbcFooterPanel);
+        editBtn.setEnabled(false);
+        footerPanel.add(editBtn);
 
         gbc.gridx = 0;
         gbc.gridy = 17;
@@ -183,29 +190,38 @@ public final class CreaturesPanel extends JPanel {
     }
 
     private void initButtons() {
-//        addBtn.addActionListener(this::addPersonality);
-//        editBtn.addActionListener(this::editPersonality);
+        addBtn.addActionListener(this::addCreature);
+        editBtn.addActionListener(this::editCreature);
     }
 
-    private void addPersonality(ActionEvent e) {
-        PersonalityWindow personalityWindow = new PersonalityWindow();
-        personalityWindow.pack();
-        personalityWindow.setVisible(true);
+    private void addCreature(ActionEvent e) {
+        CreatureWindow creatureWindow = new CreatureWindow();
+        creatureWindow.pack();
+        creatureWindow.setVisible(true);
     }
 
-    private void editPersonality(ActionEvent e) {
+    private void editCreature(ActionEvent e) {
         // TODO: Validator
         long id = Long.parseLong(resultTable.getValueAt(resultTable.getSelectedRow(), 0).toString());
         String name = resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString();
-        
-        PersonalityWindow personalityWindow = new PersonalityWindow(id,name);
-        personalityWindow.pack();
-        personalityWindow.setVisible(true);
+        String firstMetString = resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString();
+        String personality = resultTable.getValueAt(resultTable.getSelectedRow(), 3).toString();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = format.parse(firstMetString);
+
+            CreatureWindow creatureWindow = new CreatureWindow(id,name,personality,date);
+            creatureWindow.pack();
+            creatureWindow.setVisible(true);
+        } catch (HeadlessException | ParseException err) {
+            System.out.println("Couldn parse date");
+        }
+
     }
 
     private void newSelection(ListSelectionEvent event) {
         if (event.getValueIsAdjusting() && resultTable.getSelectedRow() > -1) {
-//            editBtn.setEnabled(true);
+            editBtn.setEnabled(true);
         } 
     }
 

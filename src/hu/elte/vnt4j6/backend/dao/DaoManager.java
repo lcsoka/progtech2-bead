@@ -142,6 +142,12 @@ public class DaoManager {
         return creatures;
     }
 
+    public void addCreature(Creature creature) {
+        open();
+        cDao.setCon(con);
+        cDao.save(creature);
+        close();
+    }
     /**
      * Új connection, csatlakozás az adatbázishoz
      */

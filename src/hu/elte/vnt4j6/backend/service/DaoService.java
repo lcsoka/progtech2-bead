@@ -22,8 +22,12 @@ public class DaoService implements Service {
     private DaoManager dm = new DaoManager();
 
     @Override
-    public void addCreature(String name, Date firstMet, String personality) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addCreature(String name, Date firstMet, long personalityId) {
+        Creature creature = new Creature();
+        creature.setName(name);
+        creature.setFirstMetDate(firstMet);
+        creature.setPersonalityId(personalityId);
+        dm.addCreature(creature);
     }
 
     @Override

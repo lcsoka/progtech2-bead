@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface Service {
 
-    void addCreature(String name, Date firstMet, String personality);
+    void addCreature(String name, Date firstMet, long personalityId);
     void addHouse(String name, String path);
     void addPersonality(String name);
     void addStudent(String name, long houseId, long personalityId, Date birthday);

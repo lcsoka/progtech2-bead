@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -58,10 +59,25 @@ public class JDBCCreatureDao implements CreatureDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
+   @Override
     public Creature save(Creature entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "INSERT INTO progtech2.creature (name, personality_id, first_met) VALUES (?, ?, ?)";
+
+        try (PreparedStatement statement = createPreparedStatementForSave(con, sql, entity);
+                ResultSet generatedKeys = statement.getGeneratedKeys();) {
+
+            if (generatedKeys.next()) {
+                entity.setId(generatedKeys.getLong(1));
+                return entity;
+            } else {
+                throw new SQLException("failed order creation");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCStudentDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
+
 
     @Override
     public void update(Creature entity) {
@@ -73,6 +89,19 @@ public class JDBCCreatureDao implements CreatureDao {
         this.con = con;
     }
 
+    private PreparedStatement createPreparedStatementForSave(Connection con, String sql, Creature entity) throws SQLException {
+        //Statement.RETURN_GENERATED_KEYS => beállítjuk, hogy a generált kulcs visszakérhető legyen
+        PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+        statement.setString(1, entity.getName());
+        statement.setLong(2, entity.getPersonalityId());
+        statement.setDate(3, new java.sql.Date(entity.getFirstMetDate().getTime()));
+
+        statement.executeUpdate();
+
+        return statement;
+    }
+    
     /**
      * resultSet alapján egy új Student objektum létrehozása
      *

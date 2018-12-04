@@ -80,7 +80,7 @@ public class GuiManager {
         screen.reloadStudentsView();
     }
     
-    public static void refreshStuedntList() {
+    public static void refreshStudentList() {
         screen.reloadStudentsView();
     }
     
@@ -90,4 +90,14 @@ public class GuiManager {
         return students;
     }
 
+     public static void addCreature(String name, Personality personality, Date firstMet) {
+        System.out.println("Adding creature");
+        service.addCreature(name, firstMet, personality.getPersonalityId());
+        screen.reloadCreaturesPanel();
+    }
+
+    public static void editCreature(String name, Personality personality, Date firstMet, long id) {
+        service.modifyCreature(firstMet);
+        screen.reloadCreaturesPanel();
+    }
 }
