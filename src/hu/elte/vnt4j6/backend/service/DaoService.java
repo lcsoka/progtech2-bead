@@ -10,6 +10,7 @@ import hu.elte.vnt4j6.backend.entities.Creature;
 import hu.elte.vnt4j6.backend.entities.House;
 import hu.elte.vnt4j6.backend.entities.Personality;
 import hu.elte.vnt4j6.backend.entities.Student;
+import hu.elte.vnt4j6.backend.service.exceptions.ServiceException;
 import java.util.Date;
 import java.util.List;
 
@@ -22,27 +23,67 @@ public class DaoService implements Service {
     private DaoManager dm = new DaoManager();
 
     @Override
-    public void addCreature(String name, Date firstMet, long personalityId) {
-        Creature creature = new Creature();
-        creature.setName(name);
-        creature.setFirstMetDate(firstMet);
-        creature.setPersonalityId(personalityId);
-        dm.addCreature(creature);
+    public void addCreature(String name, Date firstMet, long personalityId) throws ServiceException {
+
+        List<Creature> creatures = dm.listCreatures();
+        boolean hasSameName = false;
+        for (Creature creature : creatures) {
+            if (creature.getName().equals(name)) {
+                hasSameName = true;
+            }
+        }
+
+        if (!hasSameName) {
+            Creature creature = new Creature();
+            creature.setName(name);
+            creature.setFirstMetDate(firstMet);
+            creature.setPersonalityId(personalityId);
+            dm.addCreature(creature);
+        } else {
+            throw new ServiceException("A creature already exists with this name!");
+        }
+
     }
 
     @Override
-    public void addHouse(String name, String path) {
-        House house = new House();
-        house.setHouseName(name);
-        house.setLogo(path);
-        dm.addHouse(house);
+    public void addHouse(String name, String path) throws ServiceException {
+        List<House> houses = dm.listHouses();
+        boolean hasSameName = false;
+
+        for (House house : houses) {
+            if (house.getHouseName().equals(name)) {
+                hasSameName = true;
+            }
+        }
+        if (!hasSameName) {
+            House house = new House();
+            house.setHouseName(name);
+            house.setLogo(path);
+            dm.addHouse(house);
+        } else {
+            throw new ServiceException("A house already exists with this name!");
+        }
     }
 
     @Override
-    public void addPersonality(String name) {
-        Personality personality = new Personality();
-        personality.setPersonalityName(name);
-        dm.addPersonality(personality);
+    public void addPersonality(String name) throws ServiceException {
+
+        List<Personality> personalities = dm.listPersonalities();
+        boolean hasSameName = false;
+
+        for (Personality personality : personalities) {
+            if (personality.getPersonalityName().equals(name)) {
+                hasSameName = true;
+            }
+        }
+
+        if (!hasSameName) {
+            Personality personality = new Personality();
+            personality.setPersonalityName(name);
+            dm.addPersonality(personality);
+        } else {
+            throw new ServiceException("A personality already exists with this name!");
+        }
     }
 
     @Override
@@ -125,7 +166,6 @@ public class DaoService implements Service {
         creature.setId(id);
         dm.modifyCreature(creature);
     }
-
 
     @Override
     public int getHouseCount() {
