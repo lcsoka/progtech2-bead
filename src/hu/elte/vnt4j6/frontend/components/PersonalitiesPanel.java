@@ -82,7 +82,7 @@ public final class PersonalitiesPanel extends JPanel {
         gbHeaderPanel.setConstraints(addBtn, gbcHeaderPanel);
         headerPanel.add(addBtn);
 
-        titleLbl = new JLabel("House");
+        titleLbl = new JLabel("Personalities");
         gbcHeaderPanel.gridx = 1;
         gbcHeaderPanel.gridy = 1;
         gbcHeaderPanel.gridwidth = 8;

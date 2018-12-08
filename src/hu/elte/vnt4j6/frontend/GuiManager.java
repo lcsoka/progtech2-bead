@@ -58,6 +58,7 @@ public class GuiManager {
     public static void editHouse(String name, String path, long id) {
         service.modifyHouse(name, path, id);
         screen.reloadHousesView();
+        screen.reloadStudentsView();
     }
 
     public static void addPersonality(String name) {
@@ -97,7 +98,7 @@ public class GuiManager {
     }
 
     public static void editCreature(String name, Personality personality, Date firstMet, long id) {
-        service.modifyCreature(firstMet);
+        service.modifyCreature(name,firstMet,personality.getPersonalityId(),id);
         screen.reloadCreaturesPanel();
     }
 }

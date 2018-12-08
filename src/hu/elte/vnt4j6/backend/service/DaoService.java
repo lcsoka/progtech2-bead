@@ -117,9 +117,15 @@ public class DaoService implements Service {
     }
 
     @Override
-    public void modifyCreature(Date firstMet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void modifyCreature(String name, Date firstMet, long personalityId, long id) {
+        Creature creature = new Creature();
+        creature.setName(name);
+        creature.setFirstMetDate(firstMet);
+        creature.setPersonalityId(personalityId);
+        creature.setId(id);
+        dm.modifyCreature(creature);
     }
+
 
     @Override
     public int getHouseCount() {

@@ -73,15 +73,20 @@ public class JDBCCreatureDao implements CreatureDao {
                 throw new SQLException("failed order creation");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JDBCStudentDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JDBCCreatureDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
 
-    @Override
+     @Override
     public void update(Creature entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         String sql = "UPDATE progtech2.creature SET name=?, first_met=?, personality_id=? WHERE id=?";
+        try (PreparedStatement statement = createPreparedStatementForUpdate(con, sql, entity);) {
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBCCreatureDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -98,6 +103,17 @@ public class JDBCCreatureDao implements CreatureDao {
         statement.setDate(3, new java.sql.Date(entity.getFirstMetDate().getTime()));
 
         statement.executeUpdate();
+
+        return statement;
+    }
+    
+     private PreparedStatement createPreparedStatementForUpdate(Connection con, String sql, Creature entity) throws SQLException {
+        PreparedStatement statement = con.prepareStatement(sql);
+
+        statement.setString(1, entity.getName());
+        statement.setDate(2, new java.sql.Date(entity.getFirstMetDate().getTime()));
+        statement.setLong(3, entity.getPersonalityId());
+        statement.setLong(4, entity.getId());
 
         return statement;
     }

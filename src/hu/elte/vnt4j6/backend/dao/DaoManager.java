@@ -148,6 +148,14 @@ public class DaoManager {
         cDao.save(creature);
         close();
     }
+    
+     public void modifyCreature(Creature creature) {
+        open();
+        cDao.setCon(con);
+        cDao.update(creature);
+        close();
+    }
+    
     /**
      * Új connection, csatlakozás az adatbázishoz
      */

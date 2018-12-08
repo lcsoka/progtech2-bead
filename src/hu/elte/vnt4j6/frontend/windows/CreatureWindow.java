@@ -40,7 +40,7 @@ public class CreatureWindow extends JFrame {
     private JDatePicker firstMetPicker;
     private JButton cancelBtn;
     private JButton saveBtn;
-    private long studentId;
+    private long creatureId;
     private String creatureName;
 
     private List<Personality> personalityList;
@@ -52,32 +52,29 @@ public class CreatureWindow extends JFrame {
     }
 
     public CreatureWindow(long id, String name, String personality, Date firstMet) throws HeadlessException {
-        this.studentId = id;
+        this.creatureId = id;
         this.creatureName = name;
         loadData();
         initScreen();
         nameField.setText(name);
-        
-        
+
         int personalityIndex = 0;
         for (Personality currentPersonality : personalityList) {
-            if(currentPersonality.getPersonalityName().equals(personality)){
+            if (currentPersonality.getPersonalityName().equals(personality)) {
                 personalityIndex = personalityList.indexOf(currentPersonality);
             }
         }
-        
+
         this.personalitiesComboBox.setSelectedIndex(personalityIndex);
-        
-        
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(firstMet);
-        
+
         this.firstMetPicker.getModel().setYear(calendar.get(Calendar.YEAR));
         this.firstMetPicker.getModel().setMonth(calendar.get(Calendar.MONTH));
         this.firstMetPicker.getModel().setDay(calendar.get(Calendar.DAY_OF_MONTH));
         this.firstMetPicker.getModel().setSelected(true);
-        
-        
+
         this.editing = true;
     }
 
@@ -116,7 +113,7 @@ public class CreatureWindow extends JFrame {
         personalitiesComboBox = new JComboBox(personalityList.toArray());
 
         firstMetPicker = new JDatePicker();
-        
+
         firstMetPicker.addActionListener((e) -> {
             System.out.println(e);
         });
@@ -130,7 +127,7 @@ public class CreatureWindow extends JFrame {
         panel.add(cancelBtn);
         panel.add(saveBtn);
         add(panel);
-        
+
         initButtons();
     }
 
@@ -147,17 +144,13 @@ public class CreatureWindow extends JFrame {
     public void saveStudent(ActionEvent e) {
 
         // TODO: Validation here...
-        
-            Calendar cal = (GregorianCalendar)firstMetPicker.getModel().getValue();
+        Calendar cal = (GregorianCalendar) firstMetPicker.getModel().getValue();
         if (editing) {
-
-//            GuiManager.editStudent(
-//                    nameField.getText(),
-//                    (House) houseComboBox.getSelectedItem(),
-//                    (Personality) personalitiesComboBox.getSelectedItem(),
-//                    cal.getTime(),
-//                    studentId
-//            );
+            GuiManager.editCreature(
+                    nameField.getText(),
+                    (Personality) personalitiesComboBox.getSelectedItem(),
+                    cal.getTime(),
+                    creatureId);
         } else {
             GuiManager.addCreature(
                     nameField.getText(),
