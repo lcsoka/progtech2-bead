@@ -18,6 +18,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  *
@@ -33,6 +35,10 @@ public class DaoServiceTest {
     public DaoServiceTest() {
     }
 
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
+    
     @BeforeClass
     public static void setUpClass() {
         instance = new DaoService();
@@ -50,42 +56,22 @@ public class DaoServiceTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of addCreature method, of class DaoService.
-     */
-    @Test
-    public void testAddCreature() throws ServiceException {
-        System.out.println("addCreature");
-        String name = "Test Creature";
-        Date firstMet = null;
-        long personalityId = 0L;
-        instance.addCreature(name, firstMet, personalityId);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addHouse method, of class DaoService.
-     */
     @Test
     public void testAddHouse() throws Exception {
-        System.out.println("addHouse");
-        String name = "";
+        System.out.println("addExistingHouse");
+        String name = "Gryffindor";
         String path = "";
+        exception.expect(ServiceException.class);
         instance.addHouse(name, path);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+    
+    @Test
+    public void testAddExistingPersonality() throws ServiceException {
+        System.out.println("addExistingPersonality");
+        String name = "mad";
+        
+        exception.expect(ServiceException.class);
+        instance.addPersonality(name);
     }
 
-    /**
-     * Test of addPersonality method, of class DaoService.
-     */
-    @Test
-    public void testAddPersonality() throws Exception {
-        System.out.println("addPersonality");
-        String name = "";
-        instance.addPersonality(name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 }
